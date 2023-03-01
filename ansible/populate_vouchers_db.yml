@@ -1,0 +1,88 @@
+# Copyright 2019 celadari. All rights reserved. MIT license.
+---
+- name: Populate vouchers database
+  hosts: localhost
+  gather_facts: yes
+  connection: local
+  vars:
+    - env: dev
+  vars_files:
+    - "./vars/{{ env }}/vars.yml"
+    - "./vars/{{ env }}/vault"
+  environment:
+    BLOCKCHAIN_HOST: "{{ blockchain_host }}"
+    BLOCKCHAIN_PORT: "{{ blockchain_port_outside_container }}"
+    BLOCKCHAIN_NETWORK_ID: "{{ blockchain_network_id }}"
+    PROVIDER_MNEMONIC_PHRASE: "{{ smart_contract_mint_signer_key_mnemonic }}"
+    SMART_CONTRACT_TOKENS_NB: "{{ nb_tokens }}"
+    DB_HOST: "{{ db_host }}"
+    DB_DATABASE: "{{ db_database }}"
+    DB_USER: "{{ db_user }}"
+    DB_PASSWORD: "{{ db_password }}"
+    DB_PORT: "{{ db_port }}"
+    DB_DIALECT: "postgres"
+  tasks:
+    - name: Init tables in database
+      shell: "node services/db"
+      args:
+        chdir: "{{ playbook_dir }}/.."
+    - name: Retrieve 'smart_contract_address'
+      postgresql_query:
+        login_host: "{{ db_host }}"
+        db: "{{ db_database }}"
+        login_user: "{{ db_user }}"
+        login_password: "{{ db_password }}"
+        port: "{{ db_port }}"
+        query: "SELECT address FROM smart_contracts;"
+      register: smart_contracts_address_query
+    - name: Set fact smart_contracts_address
+      ansible.builtin.set_fact:
+        smart_contracts_address: "{{ smart_contracts_address_query['query_result'][0]['address'] }}"
+    - name: Retrieve unrevealed token uri
+      postgresql_query:
+        login_host: "{{ db_host }}"
+        db: "{{ db_database }}"
+        login_user: "{{ db_user }}"
+        login_password: "{{ db_password }}"
+        port: "{{ db_port }}"
+        query: "SELECT json_uri FROM unrevealed_tokens;"
+      register: unrevealed_token_json_uri_query
+    - name: Set fact unrevealed_token_json_uri
+      ansible.builtin.set_fact:
+        unrevealed_token_json_uri: "{{ unrevealed_token_json_uri_query['query_result'][0]['json_uri'] }}"
+
+    - name: Retrieve 'vouchers' non revealed
+      postgresql_query:
+        login_host: "{{ db_host }}"
+        db: "{{ db_database }}"
+        login_user: "{{ db_user }}"
+        login_password: "{{ db_password }}"
+        port: "{{ db_port }}"
+        query: "SELECT EXISTS(SELECT * FROM vouchers WHERE NOT is_revealed);"
+      register: vouchers_non_revealed_is_empty_query
+    - name: Set fact vouchers_non_revealed_is_empty
+      ansible.builtin.set_fact:
+        vouchers_non_revealed_is_empty: "{{ not vouchers_non_revealed_is_empty_query['query_result'][0]['exists'] }}"
+    - name: Populate vouchers database non revealed
+      command: "npx truffle exec --network={{blockchain_network}} --unrevealedJsonUri={{unrevealed_token_json_uri}} --isRevealed=false --signers={{smart_contract_mint_signer_accounts}} --signerIndex=0 --smartContractAddress={{smart_contracts_address}} --domainName='{{smart_contract_domain_name}}' --domainVersion={{smart_contract_domain_version}} scripts/stages/populateVouchersDB/populateVouchersDB.js"
+      args:
+        chdir: "{{ playbook_dir }}/.."
+      when: (not smart_contract_reveal) and vouchers_non_revealed_is_empty
+
+    - name: Retrieve 'vouchers' is revealed
+      postgresql_query:
+        login_host: "{{ db_host }}"
+        db: "{{ db_database }}"
+        login_user: "{{ db_user }}"
+        login_password: "{{ db_password }}"
+        port: "{{ db_port }}"
+        query: "SELECT EXISTS(SELECT * FROM vouchers WHERE is_revealed);"
+      register: vouchers_is_revealed_is_empty_query
+    - name: Set fact vouchers_is_revealed_is_empty
+      ansible.builtin.set_fact:
+        vouchers_is_revealed_is_empty: "{{ not vouchers_is_revealed_is_empty_query['query_result'][0]['exists'] }}"
+    - name: Populate vouchers database revealed
+      command: "npx truffle exec --network={{blockchain_network}} --isRevealed=true --signers={{smart_contract_mint_signer_accounts}} --signerIndex=0 --smartContractAddress={{smart_contracts_address}} --domainName='{{smart_contract_domain_name}}' --domainVersion={{smart_contract_domain_version}} scripts/stages/populateVouchersDB/populateVouchersDB.js"
+      args:
+        chdir: "{{ playbook_dir }}/.."
+      when: smart_contract_reveal and vouchers_is_revealed_is_empty
