@@ -1,0 +1,1 @@
+root_path_generic_erc721_smart_contract_project: "{{ role_path }}/../../.."

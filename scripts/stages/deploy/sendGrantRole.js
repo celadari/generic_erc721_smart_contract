@@ -1,4 +1,4 @@
-// Copyright 2019 celadari. All rights reserved. MIT license.
+// Copyright 2023 celadari. All rights reserved. MIT license.
 const keccak256 = require('keccak256');
 const SmartContract = artifacts.require('SmartContract');
 

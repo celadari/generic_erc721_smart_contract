@@ -1,0 +1,16 @@
+- name: Retrieve 'smart_contract_address'
+  postgresql_query:
+    login_host: "{{ db_host }}"
+    db: "{{ db_database }}"
+    login_user: "{{ db_user }}"
+    login_password: "{{ db_password }}"
+    port: "{{ db_port }}"
+    query: "SELECT address FROM smart_contracts;"
+  register: smart_contracts_address_query
+- name: Set fact smart_contracts_address
+  ansible.builtin.set_fact:
+    smart_contracts_address: "{{ smart_contracts_address_query['query_result'][0]['address'] }}"
+- name: Pause or unpause contract
+  command: "npx truffle exec --action={{pause_or_unpause}} --network={{blockchain_network}} --froms={{smart_contract_pauser_accounts}} --fromIndex=0 --smartContractAddress={{smart_contracts_address}} scripts/stages/pauseOrUnpauseContract/pauseOrUnpauseContract.js"
+  args:
+    chdir: "{{ root_path_generic_erc721_smart_contract_project }}"

@@ -1,4 +1,4 @@
-// Copyright 2019 celadari. All rights reserved. MIT license.
+// Copyright 2023 celadari. All rights reserved. MIT license.
 const EthSigUtils = require('@metamask/eth-sig-util');
 const { getPreSelectedNonFungibleTokensUnrevealed, insertVouchers } = require('../../../services/db');
 

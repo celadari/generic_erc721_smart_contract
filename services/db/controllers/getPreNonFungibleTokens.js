@@ -1,4 +1,4 @@
-// Copyright 2019 celadari. All rights reserved. MIT license.
+// Copyright 2023 celadari. All rights reserved. MIT license.
 const { PreNonFungibleToken } = require('../models/pre_non_fungible_token');
 
 const getPreNonFungibleTokens = async () => {

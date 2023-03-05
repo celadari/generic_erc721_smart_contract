@@ -1,42 +1,4 @@
-# Copyright 2019 celadari. All rights reserved. MIT license.
+# Copyright 2023 celadari. All rights reserved. MIT license.
 
 # smart contract
-nb_tokens: 9336
 smart_contract_external_url: "https://<link_to_your_project>.io"
-nb_tokens_pre_saved: 100
-
-# database
-db_host: "{{ vault_db_host }}"
-db_user: "{{ vault_db_user }}"
-db_database: "{{ vault_db_database }}"
-db_port: "{{ vault_db_port }}"
-db_password: "{{ vault_db_password }}"
-
-# nft storage api access
-nft_storage_api_key: "{{ vault_nft_storage_api_key }}"
-
-# smart contract
-smart_contract_owner_key_mnemonic: "{{ vault_smart_contract_owner_key_mnemonic }}"
-smart_contract_owner_address: "{{ vault_smart_contract_owner_address }}"
-smart_contract_withdraw_address: "{{ vault_smart_contract_withdraw_address }}"
-smart_contract_fee_recipient_address: "{{ vault_smart_contract_fee_recipient_address }}"
-smart_contract_admin_key_mnemonic: "{{ vault_smart_contract_admin_key_mnemonic }}"
-smart_contract_admin_accounts: "{{ vault_smart_contract_admin_accounts }}"
-smart_contract_mint_signer_key_mnemonic: "{{ vault_smart_contract_mint_signer_key_mnemonic }}"
-smart_contract_mint_signer_accounts: "{{ vault_smart_contract_mint_signer_accounts }}"
-smart_contract_pauser_key_mnemonic: "{{ vault_smart_contract_pauser_key_mnemonic }}"
-smart_contract_pauser_accounts: "{{ vault_smart_contract_pauser_accounts }}"
-smart_contract_domain_name: "Generic NFT Project"
-smart_contract_domain_version: "v4"
-smart_contract_name: "NFT Smart contract"
-smart_contract_symbol: "Smt"
-smart_contract_public_price: 1500000000000000000
-smart_contract_reveal: false
-
-# ganache settings (development only)
-blockchain_network: "{{ vault_blockchain_network }}"
-blockchain_host: "{{ vault_blockchain_host }}"
-blockchain_chain_id: "{{ vault_blockchain_chain_id }}"
-blockchain_network_id: "{{ vault_blockchain_network_id }}"
-blockchain_port: "{{ vault_blockchain_port }}"
-blockchain_port_outside_container: "{{ vault_blockchain_port_outside_container }}"

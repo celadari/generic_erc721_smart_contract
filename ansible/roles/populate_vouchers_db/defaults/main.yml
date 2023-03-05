@@ -1,0 +1,24 @@
+# Copyright 2023 celadari. All rights reserved. MIT license.
+
+# smart contract
+nb_tokens: 9336
+
+# database
+db_host: "{{ vault_db_host }}"
+db_user: "{{ vault_db_user }}"
+db_database: "{{ vault_db_database }}"
+db_port: "{{ vault_db_port }}"
+db_password: "{{ vault_db_password }}"
+
+# smart contract
+smart_contract_mint_signer_key_mnemonic: "{{ vault_smart_contract_mint_signer_key_mnemonic }}"
+smart_contract_mint_signer_accounts: "{{ vault_smart_contract_mint_signer_accounts }}"
+smart_contract_domain_name: "Generic NFT Project"
+smart_contract_domain_version: "v4"
+smart_contract_reveal: false
+
+# ganache settings (development only)
+blockchain_network: "{{ vault_blockchain_network }}"
+blockchain_host: "{{ vault_blockchain_host }}"
+blockchain_network_id: "{{ vault_blockchain_network_id }}"
+blockchain_port_outside_container: "{{ vault_blockchain_port_outside_container }}"

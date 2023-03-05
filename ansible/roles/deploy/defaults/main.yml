@@ -2,7 +2,7 @@
 
 # smart contract
 nb_tokens: 9336
-smart_contract_external_url: "https://<link_to_your_project>"
+smart_contract_external_url: "https://<link_to_your_project>.io"
 nb_tokens_pre_saved: 100
 
 # database
@@ -11,6 +11,7 @@ db_user: "{{ vault_db_user }}"
 db_database: "{{ vault_db_database }}"
 db_port: "{{ vault_db_port }}"
 db_password: "{{ vault_db_password }}"
+db_dialect: "postgres"
 
 # nft storage api access
 nft_storage_api_key: "{{ vault_nft_storage_api_key }}"
@@ -31,6 +32,7 @@ smart_contract_domain_version: "v4"
 smart_contract_name: "NFT Smart contract"
 smart_contract_symbol: "Smt"
 smart_contract_public_price: 1500000000000000000
+smart_contract_reveal: false
 
 # ganache settings (development only)
 blockchain_network: "{{ vault_blockchain_network }}"
