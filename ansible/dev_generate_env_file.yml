@@ -1,0 +1,13 @@
+# Copyright 2023 celadari. All rights reserved. MIT license.
+---
+- name: Generate .env file for docker-compose
+  hosts: localhost
+  gather_facts: yes
+  connection: local
+  vars:
+    - env: dev
+  vars_files:
+    - "./vars/{{ env }}/vars.yml"
+    - "./vars/{{ env }}/vault"
+  roles:
+    - generate_env_file

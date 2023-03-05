@@ -139,11 +139,6 @@
   ansible.builtin.set_fact:
     unrevealed_token_json_uri: "{{ unrevealed_token_json_uri_query['query_result'][0]['json_uri'] }}"
 
-# Start a ganache node in background
-- name: Execute ganache in background (dev environment) only
-  shell: "docker start ganache_instance || docker run --name ganache_instance --detach --publish {{ blockchain_port_outside_container }}:{{ blockchain_port }} trufflesuite/ganache-cli:latest --gasLimit 0x4C4B400 --chainId {{ blockchain_chain_id }} --networkId {{ blockchain_network_id }} --port {{ blockchain_port }} --mnemonic '{{ smart_contract_owner_key_mnemonic }}' --debug"
-  when: env == "dev"
-
 # Deploy smart contract
 - name: Check if 'smart_contracts' table column 'address' is provided
   postgresql_query:

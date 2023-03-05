@@ -27,7 +27,7 @@
     SMART_CONTRACT_FEE_RECIPIENT_ADDRESS: "{{ smart_contract_fee_recipient_address }}"
     SMART_CONTRACT_TOKENS_NB: "{{ nb_tokens }}"
     BLOCKCHAIN_HOST: "{{ blockchain_host }}"
-    BLOCKCHAIN_PORT: "{{ blockchain_port_outside_container }}"
+    BLOCKCHAIN_PORT: "{{ blockchain_port }}"
     BLOCKCHAIN_NETWORK_ID: "{{ blockchain_network_id }}"
   pre_tasks:
     - name: Install python packages

@@ -1,4 +1,10 @@
 # Copyright 2023 celadari. All rights reserved. MIT license.
 
 # smart contract
+nb_tokens: 9336
+nb_tokens_pre_saved: 100
 smart_contract_external_url: "https://<link_to_your_project>.io"
+smart_contract_domain_name: "Generic NFT Project"
+smart_contract_domain_version: "v4"
+smart_contract_name: "NFT Smart contract"
+smart_contract_symbol: "Smt"

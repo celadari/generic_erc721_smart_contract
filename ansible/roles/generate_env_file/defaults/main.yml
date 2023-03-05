@@ -1,18 +1,21 @@
 # Copyright 2023 celadari. All rights reserved. MIT license.
 
+# default root directory
+path_output_generated_env_file: "{{ role_path }}/../../.."
+
 # database
-db_host: "{{ vault_db_host }}"
 db_user: "{{ vault_db_user }}"
 db_database: "{{ vault_db_database }}"
 db_port: "{{ vault_db_port }}"
+db_port_inside_container: "{{ vault_db_port_inside_container }}"
 db_password: "{{ vault_db_password }}"
 
 # smart contract
-smart_contract_pauser_key_mnemonic: "{{ vault_smart_contract_pauser_key_mnemonic }}"
-smart_contract_pauser_accounts: "{{ vault_smart_contract_pauser_accounts }}"
+smart_contract_owner_key_mnemonic: "{{ vault_smart_contract_owner_key_mnemonic }}"
 
 # ganache settings (development only)
-blockchain_network: "{{ vault_blockchain_network }}"
 blockchain_host: "{{ vault_blockchain_host }}"
+blockchain_chain_id: "{{ vault_blockchain_chain_id }}"
 blockchain_network_id: "{{ vault_blockchain_network_id }}"
+blockchain_inside_container_port: "{{ vault_blockchain_inside_container_port }}"
 blockchain_port: "{{ vault_blockchain_port }}"

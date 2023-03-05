@@ -1,0 +1,39 @@
+version: '3'
+services:
+  postgres:
+    container_name: 'generic_erc721_smart_contract_postgres'
+    image: 'postgres:latest'
+    ports:
+      - "${POSTGRES_PORT}:${POSTGRES_PORT_INSIDE_CONTAINER}"
+    command:
+      - "-p $POSTGRES_PORT_INSIDE_CONTAINER"
+    environment:
+      - POSTGRES_DB=$POSTGRES_DB
+      - POSTGRES_USER=$POSTGRES_USER
+      - POSTGRES_PASSWORD=$POSTGRES_PASSWORD
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    profiles:
+      - deploy-local-chain
+      - deploy
+  server:
+    container_name: 'generic_erc721_smart_contract_ganache'
+    image: 'trufflesuite/ganache-cli:latest'
+    ports:
+      - "${BLOCKCHAIN_PORT}:${BLOCKCHAIN_INSIDE_CONTAINER_PORT}"
+    command:
+      - "--chainId"
+      - "$BLOCKCHAIN_CHAIN_ID"
+      - "--networkId"
+      - "$BLOCKCHAIN_NETWORK_ID"
+      - "--port"
+      - "$BLOCKCHAIN_INSIDE_CONTAINER_PORT"
+      - "--mnemonic"
+      - "'$BLOCKCHAIN_PROVIDER_MNEMONIC'"
+      - "--debug"
+    profiles:
+      - deploy-local-chain
+      - local-chain
+volumes:
+  postgres:
+    driver: local

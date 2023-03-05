@@ -11,7 +11,7 @@
     - "./vars/{{ env }}/vault"
   environment:
     BLOCKCHAIN_HOST: "{{ blockchain_host }}"
-    BLOCKCHAIN_PORT: "{{ blockchain_port_outside_container }}"
+    BLOCKCHAIN_PORT: "{{ blockchain_port }}"
     BLOCKCHAIN_NETWORK_ID: "{{ blockchain_network_id }}"
     PROVIDER_MNEMONIC_PHRASE: "{{ smart_contract_mint_signer_key_mnemonic }}"
     SMART_CONTRACT_TOKENS_NB: "{{ nb_tokens }}"
