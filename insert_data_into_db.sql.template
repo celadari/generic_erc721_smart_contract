@@ -1,0 +1,12 @@
+-- for dev purpose only
+
+INSERT INTO pre_selected_users(address) VALUES
+('<first_address>'),
+('<second_address>');
+
+INSERT INTO pre_selected_non_fungible_tokens(price, pre_selected_user_id) VALUES
+(0, 1),
+(0, 1),
+(0, 1),
+(0, 2),
+(10000, 1);

@@ -16,6 +16,9 @@ data
 # Vault
 ansible/vars/**/vault
 
+# insert data file
+insert_data_into_db.sql
+
 # Conf
 config
 
