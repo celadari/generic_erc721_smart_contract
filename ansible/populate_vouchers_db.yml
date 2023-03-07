@@ -21,5 +21,12 @@
     DB_PASSWORD: "{{ db_password }}"
     DB_PORT: "{{ db_port }}"
     DB_DIALECT: "postgres"
+  pre_tasks:
+    - name: Install python packages
+      ansible.builtin.pip:
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - psycopg2-binary
   roles:
     - populate_vouchers_db

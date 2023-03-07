@@ -15,5 +15,12 @@
     BLOCKCHAIN_PORT: "{{ blockchain_port }}"
     BLOCKCHAIN_NETWORK_ID: "{{ blockchain_network_id }}"
     PROVIDER_MNEMONIC_PHRASE: "{{ smart_contract_pauser_key_mnemonic }}"
+  pre_tasks:
+    - name: Install python packages
+      ansible.builtin.pip:
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - psycopg2-binary
   roles:
     - pause_or_unpause_contract
